@@ -9,6 +9,14 @@
 #include <QObject>
 #include <QMutex>
 #include <QByteArray>
+#include <Windows.h>
+
+#include <Ddeml.h>
+#include <string>
+#include <iostream>
+#include <QTextCodec>
+#include "callback.h"
+
 
 #define DDECOMM_TIMEOUT_MS       5000
 
@@ -32,22 +40,22 @@ public:
     // functions based on conversation
     /// @return     conversation to advise, number as conversation Id
     ///             if the function fails, the return value is 0L.
-    ulong open(QString application, QString topic);
+    UINT64 open(QString application, QString topic);
     /// @param      conversation    number as conversation Id
-    bool close(ulong conversation);
+    bool close(UINT64 conversation);
 
-    bool advise(ulong conversation, QString item, ulong timeoutInMs = DDECOMM_TIMEOUT_MS);
-    bool unadvise(ulong conversation, QString item, ulong timeoutInMs = DDECOMM_TIMEOUT_MS);
+    bool advise(UINT64 conversation, QString item, ulong timeoutInMs = DDECOMM_TIMEOUT_MS);
+    bool unadvise(UINT64 conversation, QString item, ulong timeoutInMs = DDECOMM_TIMEOUT_MS);
 
 signals:
-    void requested(ulong conversation, QString topic, QString item, QString text);
-    void poked(ulong conversation, QString topic, QString item, QString text);
-    void executed(ulong conversation, QString topic, QString command);
+    void requested(UINT64 conversation, QString topic, QString item, QString text);
+    void poked(UINT64 conversation, QString topic, QString item, QString text);
+    void executed(UINT64 conversation, QString topic, QString command);
 
-    void opened(ulong conversation, QString application, QString topic);
-    void closed(ulong conversation);
-    void advised(ulong conversation, QString topic, QString item, QString text);
-    void adviceUpdated(ulong conversation, QString item, bool started);
+    void opened(UINT64 conversation, QString application, QString topic);
+    void closed(UINT64 conversation);
+    void advised(UINT64 conversation, QString topic, QString item, QString text);
+    void adviceUpdated(UINT64 conversation, QString item, bool started);
 
     void log(QString msg);
 };

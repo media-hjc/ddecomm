@@ -19,15 +19,15 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    DdeComm comm;
+    DdeComm comm; //实例化一个对象comm
 
     // Request
-    QString ret = comm.request(DDEAPP, DDETOPIC, DDEITEM);
-    qDebug() << ret;
+    QString ret = comm.request(DDEAPP, DDETOPIC, DDEITEM);  //订阅指定程序会话的数据项
+    qDebug() << ret;   //输入订阅结果到调试窗口
     // Poke
-    comm.poke(DDEAPP, DDETOPIC, DDEITEM, DDEPOKE);
+    comm.poke(DDEAPP, DDETOPIC, DDEITEM, DDEPOKE);  //发送POKE
     // Execute
-    comm.execute(DDEAPP, DDETOPIC, DDECOMMAND);
+    comm.execute(DDEAPP, DDETOPIC, DDECOMMAND);  //发送要执行的命令
     // Advise
     unsigned long conv = comm.open(DDEAPP, DDETOPIC);
     comm.advise(conv, DDEITEM);
